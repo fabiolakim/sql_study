@@ -1,7 +1,6 @@
 # Advent of SQL 2025 Solutions
 
-Generated on: 1/25/2026, 1:05:50 PM
-
+Problem Solved: 25.12.01 - 25.12.25
 Total Solved: 25/25
 
 ---
