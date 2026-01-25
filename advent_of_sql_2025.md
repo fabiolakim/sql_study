@@ -1,4 +1,4 @@
-# Advent of SQL 2025 Solutions - fabiola
+# Advent of SQL 2025 Solutions
 
 Generated on: 1/25/2026, 1:05:50 PM
 
