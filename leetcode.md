@@ -66,5 +66,3 @@ WITH letsrank AS
 SELECT score, 'rank'
 FROM letsrank
 ```
-
-
