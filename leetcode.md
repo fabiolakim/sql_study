@@ -37,3 +37,34 @@ ORDER BY salary DESC
 LIMIT 1
 OFFSET 1
 )
+```
+
+### [177. Nth Highest Salary](https://leetcode.com/problems/nth-highest-salary/description/)
+> CREATE FUNCTION 함수 구문을 처음 접했다.
+> - 데이터베이스 내에서 반복적인 작업을 자동화하고, SQL 쿼리에서 효율성을 극대화하는 함수
+> - 일반 SQL과 달리 stored function(이번 문제), stored procedure의 경우 세미콜론 문법이 중요하다.
+
+```
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS N
+BEGIN
+SET N = N-1;
+RETURN(SELECT DISTINCT salary FROM employee ORDER BY salary DESC LIMIT 1 OFFSET N);
+```
+
+### [178. Rank Scores](https://leetcode.com/problems/rank-scores/description/)
+> - rank, group, order, value, index와 같은 alias는 지양하기
+> - 특히 윈도우 함수와 함께 쓰게 되면 컬럼인지 함수인지 SQL에 혼란을 준다.
+
+```
+WITH letsrank AS
+(
+    SELECT id,
+           score,
+           DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'
+    FROM scores
+)
+SELECT score, 'rank'
+FROM letsrank
+```
+
+
