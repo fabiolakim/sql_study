@@ -66,3 +66,47 @@ WITH letsrank AS
 SELECT score, 'rank'
 FROM letsrank
 ```
+
+### [180. Consecutive Numbers](https://leetcode.com/problems/consecutive-numbers/)
+> SQL은 파이썬처럼 a=b=c 비교 연산자를 연달아 사용할 수 없다!
+```
+WITH base AS
+(
+SELECT id,
+       num,
+       LAG(num) OVER (ORDER BY id) AS atras,
+       LEAD(num) OVER (ORDER BY id) AS frente
+FROM logs
+)
+
+SELECT DISTINCT num AS ConsecutiveNums
+FROM base
+WHERE num = atras AND num = frente
+```
+
+### [181. Employees Earning More Than Their Managers] (https://leetcode.com/problems/employees-earning-more-than-their-managers/description/)
+```
+SELECT employee.name AS Employee
+FROM employee
+JOIN employee AS manager
+ON employee.managerid = manager.id
+WHERE 1=1
+AND employee.salary > manager.salary
+```
+
+### [182. Duplicate Emails] (https://leetcode.com/problems/duplicate-emails/description/)
+```
+SELECT email
+FROM person
+GROUP BY 1
+HAVING COUNT(email) >= 2
+```
+
+### [183. Customers Who Never Order] (https://leetcode.com/problems/customers-who-never-order/description/)
+```
+SELECT customers.name AS Customers
+FROM customers
+LEFT JOIN orders
+ON orders.customerid = customers.id
+WHERE orders.id IS NULL
+```
