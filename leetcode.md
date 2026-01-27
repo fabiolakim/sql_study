@@ -84,7 +84,7 @@ FROM base
 WHERE num = atras AND num = frente
 ```
 
-### [181. Employees Earning More Than Their Managers] (https://leetcode.com/problems/employees-earning-more-than-their-managers/description/)
+### [181. Employees Earning More Than Their Managers](https://leetcode.com/problems/employees-earning-more-than-their-managers/description/)
 ```
 SELECT employee.name AS Employee
 FROM employee
@@ -94,7 +94,7 @@ WHERE 1=1
 AND employee.salary > manager.salary
 ```
 
-### [182. Duplicate Emails] (https://leetcode.com/problems/duplicate-emails/description/)
+### [182. Duplicate Emails](https://leetcode.com/problems/duplicate-emails/description/)
 ```
 SELECT email
 FROM person
@@ -102,7 +102,7 @@ GROUP BY 1
 HAVING COUNT(email) >= 2
 ```
 
-### [183. Customers Who Never Order] (https://leetcode.com/problems/customers-who-never-order/description/)
+### [183. Customers Who Never Order](https://leetcode.com/problems/customers-who-never-order/description/)
 ```
 SELECT customers.name AS Customers
 FROM customers
