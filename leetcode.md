@@ -130,4 +130,13 @@ FROM base
 WHERE ranking =1
 ```
 
-
+> 부서별 MAX(salary)를 찾는 WHERE 조건문 활용
+```sql
+SELECT department.name AS Department,
+       employee.name AS Employee,
+       employee.salary AS Salary
+FROM employee
+JOIN department
+ON employee.departmentid = department.id
+WHERE (departmentid, employee.salary) IN (SELECT departmentid, MAX(salary) FROM employee GROUP BY 1)
+```
