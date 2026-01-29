@@ -111,7 +111,7 @@ ON orders.customerid = customers.id
 WHERE orders.id IS NULL
 ```
 
-### [184. Department Highest Salary] (https://leetcode.com/problems/department-highest-salary/description/)
+### [184. Department Highest Salary](https://leetcode.com/problems/department-highest-salary/description/)
 > CTE에서 RANK 함수를 이용하여 메인쿼리에서 RANK=1로 찾기
 ```sql
 WITH base AS
