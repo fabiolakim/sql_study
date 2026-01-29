@@ -140,3 +140,23 @@ JOIN department
 ON employee.departmentid = department.id
 WHERE (departmentid, employee.salary) IN (SELECT departmentid, MAX(salary) FROM employee GROUP BY 1)
 ```
+
+### [185. Department Top Three Salaries] (https://leetcode.com/problems/department-top-three-salaries/description/)
+```sql
+WITH base AS
+(
+    SELECT name, 
+           salary, 
+           departmentid,
+           DENSE_RANK() OVER (PARTITION BY departmentid ORDER BY salary DESC) AS ranking
+    FROM employee
+)
+
+SELECT department.name AS Department,
+       base.name AS Employee,
+       base.salary AS Salary
+FROM base
+JOIN department
+ON base.departmentid = department.id
+WHERE base.ranking <= 3
+```
