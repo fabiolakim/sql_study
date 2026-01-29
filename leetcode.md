@@ -160,3 +160,17 @@ JOIN department
 ON base.departmentid = department.id
 WHERE base.ranking <= 3
 ```
+
+### [196. Delete Duplicate Emails](https://leetcode.com/problems/delete-duplicate-emails/)
+> 처음 작성한 쿼리 (오답)
+> Error: - You can't specify target table 'person' for update in FROM clause
+```sql
+DELETE FROM person
+WHERE id NOT IN (SELECT MIN(id) AS min_id FROM person GROUP BY email)
+```
+
+> DELETE, UPDATE와 같이 테이블을 수정하는 함수에서는 수정 중인 원본 데이터를 직접 읽으면 결과가 꼬일 수 있으니, 임시 테이블을 만들어 참조하게 함으로써 데이터의 충돌을 방지해야 한다.
+```sql
+DELETE FROM person
+WHERE id NOT IN (SELECT min_id FROM (SELECT MIN(id) AS min_id FROM person GROUP BY email) AS base)
+```
