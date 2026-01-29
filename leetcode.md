@@ -141,7 +141,7 @@ ON employee.departmentid = department.id
 WHERE (departmentid, employee.salary) IN (SELECT departmentid, MAX(salary) FROM employee GROUP BY 1)
 ```
 
-###[185. Department Top Three Salaries](https://leetcode.com/problems/department-top-three-salaries/description/)
+### [185. Department Top Three Salaries](https://leetcode.com/problems/department-top-three-salaries/description/)
 ```sql
 WITH base AS
 (
