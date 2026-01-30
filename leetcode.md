@@ -192,3 +192,34 @@ WHERE 1=1
 AND DATEDIFF(recorddate, yesterday_date) = 1
 AND yesterday_temp < temperature
 ```
+
+### [262. Trips and Users](https://leetcode.com/problems/trips-and-users/description/)
+> - 처음 범한 오류: JOIN + ON + OR로 테이블을 조인하고 users_id에 driver, client 모두 포섭되니 users.banned = 'No'만 하면 될 것이라 생각
+> - 레슨런: 참조 테이블의 한 컬럼이 대상 테이블의 서로 다른 두 컬럼과 관계를 맺을 때는, 각각 별도로 셀프 조인하여 각 조건이 동시에 충족되는지 검증해야 한다
+```sql
+WITH base AS
+(
+SELECT trips.id,
+       trips.client_id,
+       trips.driver_id,
+       trips.status,
+       trips.request_at,
+       client.users_id,
+       client.banned AS c_banned,
+       driver.banned AS d_banned
+FROM trips 
+JOIN users AS client
+ON trips.client_id = client.users_id
+JOIN users AS driver
+ON trips.driver_id = driver.users_id
+WHERE 1=1
+AND client.banned = 'No'
+AND driver.banned = 'No'
+AND DATE(trips.request_at) IN ('2013-10-01', '2013-10-02', '2013-10-03')
+)
+
+SELECT request_at AS Day,
+       ROUND(SUM(CASE WHEN status = 'completed' THEN 0 ELSE 1 END) / COUNT(id), 2) AS 'Cancellation Rate'
+FROM base
+GROUP BY 1
+```
