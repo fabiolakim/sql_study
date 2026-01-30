@@ -174,3 +174,21 @@ WHERE id NOT IN (SELECT MIN(id) AS min_id FROM person GROUP BY email)
 DELETE FROM person
 WHERE id NOT IN (SELECT min_id FROM (SELECT MIN(id) AS min_id FROM person GROUP BY email) AS base)
 ```
+
+### [197. Rising Temperature](https://leetcode.com/problems/rising-temperature/description/)
+> 주어진 테이블의 날짜가 연속적이라는 보장이 없으므로, temperature 뿐만 아니라 date에 대해서도 전일인지 확인이 필요하다.
+```sql
+WITH base AS
+(
+SELECT *,
+       LAG(recorddate, 1) OVER (ORDER BY recorddate) AS yesterday_date,
+       LAG(temperature, 1) OVER (ORDER BY recorddate) AS yesterday_temp
+FROM weather
+)
+
+SELECT Id
+FROM base
+WHERE 1=1
+AND DATEDIFF(recorddate, yesterday_date) = 1
+AND yesterday_temp < temperature
+```
