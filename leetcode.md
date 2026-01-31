@@ -223,3 +223,45 @@ SELECT request_at AS Day,
 FROM base
 GROUP BY 1
 ```
+
+### [511. Game Play Analysis I](https://leetcode.com/problems/game-play-analysis-i/description/)
+```sql
+SELECT player_id, MIN(event_date) AS first_login
+FROM activity
+GROUP BY 1
+```
+
+
+### [570. Managers with at Least 5 Direct Reports](https://leetcode.com/problems/managers-with-at-least-5-direct-reports/description/)
+```sql
+WITH base AS
+(
+SELECT employee.id AS emp_id,
+       manager.id AS man_id,
+       manager.name AS man_name
+FROM employee
+JOIN employee AS manager
+ON employee.managerid = manager.id
+)
+
+SELECT man_name AS name
+FROM base
+GROUP BY man_id
+HAVING COUNT(emp_id) >= 5
+```
+
+
+### [585. Investments in 2016](https://leetcode.com/problems/investments-in-2016/description/)
+```sql
+WITH base AS
+(
+SELECT pid, tiv_2015, tiv_2016
+FROM insurance
+WHERE 1=1
+AND tiv_2015 IN (SELECT tiv_2015 FROM insurance GROUP BY 1 HAVING COUNT(*) > 1)
+AND (lat,lon) IN (SELECT lat,lon FROM insurance GROUP BY 1,2 HAVING COUNT(*) = 1)
+)
+
+SELECT ROUND(SUM(tiv_2016),2) AS tiv_2016
+FROM base
+```
