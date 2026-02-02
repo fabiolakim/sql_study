@@ -265,3 +265,35 @@ AND (lat,lon) IN (SELECT lat,lon FROM insurance GROUP BY 1,2 HAVING COUNT(*) = 1
 SELECT ROUND(SUM(tiv_2016),2) AS tiv_2016
 FROM base
 ```
+
+
+### [550. Game Play Analysis IV](https://leetcode.com/problems/game-play-analysis-iv/description/)
+> - 메인 쿼리에서 numbering = 1으로 필터링해야 '첫날' 접속한 유저가 바로 다음 날에도 들어왔는지 구할 수 있다.
+> - 해당 조건이 없으면 가령 세번째 로그인 날짜의 다음 날짜가 연속되었는지 여부까지 같이 조회하게 된다.
+> - 따라서 평균값이 희석되는 문제 발생
+
+전체 로그인 기록 중 numbering = 1인 행만 필터링해야 **'첫날 접속한 유저가 바로 다음 날에도 들어왔는지'**라는 문제의 의도를 정확히 맞출 수 있어요. 이 조건이 없으면 2~3회차 이상의 접속 기록까지 계산에 포함되어 평균값이 낮아지게 됩니다
+
+```sql
+WITH numbering_table AS
+(
+SELECT player_id,
+       event_date,
+       ROW_NUMBER () OVER (PARTITION BY player_id ORDER BY event_date) AS numbering,
+       LEAD(event_date, 1) OVER (PARTITION BY player_id ORDER BY event_date) AS following_date
+FROM activity
+)
+,
+targeting_table AS
+(
+SELECT event_date,
+       following_date,
+       numbering,
+       CASE WHEN numbering = 1 THEN event_date ELSE 0 END AS first_date
+FROM numbering_table
+)
+
+SELECT ROUND(AVG(COALESCE(CASE WHEN DATEDIFF(following_date, first_date) = 1 THEN 1 ELSE 0 END)),2) AS fraction
+FROM targeting_table
+WHERE numbering = 1
+```
