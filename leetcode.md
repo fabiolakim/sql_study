@@ -193,6 +193,8 @@ AND DATEDIFF(recorddate, yesterday_date) = 1
 AND yesterday_temp < temperature
 ```
 
+
+
 ### [262. Trips and Users](https://leetcode.com/problems/trips-and-users/description/)
 > - 처음 범한 오류: JOIN + ON + OR로 테이블을 조인하고 users_id에 driver, client 모두 포섭되니 users.banned = 'No'만 하면 될 것이라 생각
 > - 레슨런: 참조 테이블의 한 컬럼이 대상 테이블의 서로 다른 두 컬럼과 관계를 맺을 때는, 각각 별도로 셀프 조인하여 각 조건이 동시에 충족되는지 검증해야 한다
@@ -249,6 +251,20 @@ FROM base
 GROUP BY man_id
 HAVING COUNT(emp_id) >= 5
 ```
+
+
+### [577. Employee Bonus](https://leetcode.com/problems/employee-bonus/description/)
+> bonus가 없는 employee도 구해야 하므로 LEFT JOIN 필요
+```sql
+
+SELECT employee.name AS name,
+       bonus.bonus AS bonus
+FROM employee
+LEFT JOIN bonus
+ON employee.empid = bonus.empid
+WHERE bonus.bonus < 1000 OR bonus.bonus IS NULL
+```
+
 
 
 ### [585. Investments in 2016](https://leetcode.com/problems/investments-in-2016/description/)
