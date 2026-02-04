@@ -311,3 +311,37 @@ SELECT ROUND(AVG(COALESCE(CASE WHEN DATEDIFF(following_date, first_date) = 1 THE
 FROM targeting_table
 WHERE numbering = 1
 ```
+
+### [584. Find Customer Referee](https://leetcode.com/problems/find-customer-referee/description/)
+```sql
+SELECT name
+FROM customer
+WHERE referee_id != 2 OR referee_id IS NULL
+```
+
+
+### [586. Customer Placing the Largest Number of Orders](https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/description/)
+```sql
+SELECT customer_number
+FROM orders
+GROUP BY 1
+ORDER BY COUNT(order_number) DESC
+LIMIT 1
+```
+
+
+### [595. Big Countries](https://leetcode.com/problems/big-countries/description/)
+```sql
+SELECT name, population, area
+FROM world
+WHERE area >= 3000000 OR population >= 25000000
+```
+
+
+### [596. Classes With at Least 5 Students](https://leetcode.com/problems/classes-with-at-least-5-students/description/)
+```sql
+SELECT class
+FROM courses
+GROUP BY 1
+HAVING COUNT(student) >= 5
+```
