@@ -345,3 +345,16 @@ FROM courses
 GROUP BY 1
 HAVING COUNT(student) >= 5
 ```
+
+### [607. Sales Person](https://leetcode.com/problems/sales-person/description/)
+```sql
+SELECT orders.order_id,
+       orders.order_date,
+       orders.com_id,
+       orders.sales_id,
+       orders.amount
+FROM orders
+JOIN company
+ON orders.com_id = company.com_id
+WHERE company.name NOT LIKE '%RED%'
+```
