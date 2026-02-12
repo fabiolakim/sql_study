@@ -357,3 +357,11 @@ JOIN company ON orders.com_id = company.com_id
 WHERE company.name = 'RED'
 )
 ```
+
+### [1050. Actors and Directors Who Cooperated At Least Three Times](https://leetcode.com/problems/actors-and-directors-who-cooperated-at-least-three-times/)
+```sql
+SELECT actor_id, director_id
+FROM actordirector
+GROUP BY 1,2
+HAVING COUNT(*) >= 3
+```
