@@ -409,3 +409,20 @@ WHERE rides.user_id IS NULL
 
 ORDER BY 2 DESC, 1
 ```
+
+
+### [1204. Last Person to Fit in the Bus](https://leetcode.com/problems/last-person-to-fit-in-the-bus/description/)
+```sql
+WITH base AS
+(
+SELECT *,
+       SUM(weight) OVER (ORDER BY turn) AS cumm
+FROM queue
+)
+
+SELECT person_name
+FROM base
+WHERE cumm <= 1000
+ORDER BY turn DESC
+LIMIT 1
+```
