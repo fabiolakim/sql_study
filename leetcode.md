@@ -388,3 +388,24 @@ ON product.product_id = sales.product_id
 GROUP BY 1,2
 HAVING SUM(CASE WHEN sales.sale_date BETWEEN '2019-01-01' AND '2019-03-31' THEN 0 ELSE 1 END) = 0
 ```
+
+### [1407. Top Travellers](https://leetcode.com/problems/top-travellers/description/)
+```sql
+SELECT users.name,
+       SUM(rides.distance) AS travelled_distance
+FROM rides
+JOIN users 
+ON rides.user_id = users.id
+GROUP BY users.id, users.name
+
+UNION ALL
+
+SELECT users.name,
+       0 AS travelled_distance
+FROM users
+LEFT JOIN rides
+ON users.id = rides.user_id
+WHERE rides.user_id IS NULL
+
+ORDER BY 2 DESC, 1
+```
