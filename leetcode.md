@@ -426,3 +426,29 @@ WHERE cumm <= 1000
 ORDER BY turn DESC
 LIMIT 1
 ```
+
+
+### [1321. Restaurant Growth](https://leetcode.com/problems/restaurant-growth/description/)
+```sql
+WITH base AS
+(
+SELECT visited_on,
+       SUM(amount) AS sum_amount,
+       COUNT(visited_on) OVER (ORDER BY visited_on) AS count_date
+FROM customer
+GROUP BY 1
+)
+,
+calculate AS
+(
+SELECT visited_on,
+       count_date,
+       SUM(sum_amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS amount,
+       ROUND(AVG(sum_amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW),2) AS average_amount
+FROM base
+)
+
+SELECT visited_on, amount, average_amount
+FROM calculate
+WHERE count_date >= 7
+```
