@@ -486,3 +486,26 @@ SELECT name AS results FROM bestrater
 UNION ALL
 SELECT title AS results FROM bestrated
 ```
+
+### [3832. Find Users with Persistent Behavior Patterns](https://leetcode.com/problems/find-users-with-persistent-behavior-patterns/description/)
+```sql
+WITH base AS
+(
+SELECT user_id,
+       action_date,
+       action,
+       ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY action_date) -
+       ROW_NUMBER() OVER (PARTITION BY user_id, action ORDER BY action_date) AS grupo
+FROM activity
+)
+
+SELECT user_id,
+       action,
+       COUNT(*) AS streak_length,
+       MIN(action_date) AS start_date,
+       MAX(action_date) AS end_date
+FROM base
+GROUP BY 1,2, grupo
+HAVING(COUNT(*)) >= 5
+ORDER BY 3 DESC, 1
+```
