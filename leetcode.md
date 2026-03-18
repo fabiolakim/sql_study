@@ -455,6 +455,7 @@ WHERE count_date >= 7
 
 ### [1341. Movie Rating](https://leetcode.com/problems/movie-rating/description/)
 ```sql
+-- 가장 많은 수의 영화를 rate한 사람
 WITH bestrater AS
 (
 SELECT users.name,
