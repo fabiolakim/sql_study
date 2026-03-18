@@ -452,3 +452,36 @@ SELECT visited_on, amount, average_amount
 FROM calculate
 WHERE count_date >= 7
 ```
+
+### [1341. Movie Rating](https://leetcode.com/problems/movie-rating/description/)
+```sql
+WITH bestrater AS
+(
+SELECT users.name,
+       COUNT(movie_id)
+FROM movierating
+JOIN users
+ON movierating.user_id = users.user_id
+GROUP BY 1
+ORDER BY 2 DESC, 1
+LIMIT 1
+)
+,
+-- 2020년 2월에 가장 높은 rating을 받은 영화
+bestrated AS
+(
+SELECT title,
+       AVG(rating)
+FROM movierating
+JOIN movies
+ON movierating.movie_id = movies.movie_id
+WHERE YEAR(created_at) = 2020 AND MONTH(created_at) = 2
+GROUP BY 1 
+ORDER BY 2 DESC, 1
+LIMIT 1
+)
+
+SELECT name AS results FROM bestrater
+UNION ALL
+SELECT title AS results FROM bestrated
+```
