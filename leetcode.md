@@ -509,3 +509,13 @@ GROUP BY 1,2, grupo
 HAVING(COUNT(*)) >= 5
 ORDER BY 3 DESC, 1
 ```
+
+### [1484. Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/description/)
+```sql
+SELECT 
+    sell_date,
+    COUNT(DISTINCT product) AS num_sold,
+    GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',') AS products
+FROM Activities
+GROUP BY 1
+```
