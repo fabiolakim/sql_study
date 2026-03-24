@@ -519,3 +519,21 @@ SELECT
 FROM Activities
 GROUP BY 1
 ```
+
+### [1393. Capital Gain/Loss](https://leetcode.com/problems/capital-gainloss/description/)
+```sql
+WITH base AS
+(
+SELECT stock_name,
+       CASE WHEN operation = 'Buy' THEN price * -1
+            WHEN operation = 'Sell' THEN price
+            END AS gain_loss
+FROM stocks
+ORDER BY operation_day
+)
+
+SELECT stock_name,
+       SUM(gain_loss) AS capital_gain_loss
+FROM base
+GROUP BY 1
+```
