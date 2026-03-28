@@ -556,3 +556,13 @@ SELECT 'High Salary',
        SUM(income > 50000)
 FROM Accounts
 ```
+
+### [1934. Confirmation Rate](https://leetcode.com/problems/confirmation-rate/description/)
+```sql
+SELECT signups.user_id,
+       ROUND(IFNULL(AVG(confirmations.action = 'confirmed'), 0), 2) AS confirmation_rate
+FROM signups
+LEFT JOIN confirmations
+ON signups.user_id = confirmations.user_id
+GROUP BY 1
+```
